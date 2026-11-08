@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<title>MSM</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f3f8;--card:#fff;--ink:#1f1b2e;--mute:#6b6880;--line:#e3e1ec;--pri:#3d3b8e;--onpri:#fff;--acc:#e8576b;--ok:#1f8a70;--soft:#e9e8f6;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15131f;--card:#201d30;--ink:#f1eff8;--mute:#a19eb8;--line:#332f48;--pri:#8f8df0;--onpri:#15131f;--acc:#ff7b8d;--ok:#4fc9a7;--soft:#2b2846;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#15131f;--card:#201d30;--ink:#f1eff8;--mute:#a19eb8;--line:#332f48;--pri:#8f8df0;--onpri:#15131f;--acc:#ff7b8d;--ok:#4fc9a7;--soft:#2b2846;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Arabic",Tahoma,Arial,sans-serif;line-height:1.6}
+button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}
+a{color:var(--pri)}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--card);border-bottom:1px solid var(--line)}
+.bar{max-width:1000px;margin:auto;display:flex;align-items:center;gap:8px;padding:10px 16px;flex-wrap:wrap}
+.logo{font-weight:700;font-size:1.5rem;letter-spacing:.04em;color:var(--pri);margin-inline-end:auto;cursor:pointer}
+.ibtn{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 14px}
+main{max-width:1000px;margin:auto;padding:16px}
+h1{font-size:1.7rem;margin:.3em 0}h2{font-size:1.2rem;margin:.2em 0 .6em}
+.hero{background:var(--pri);color:var(--onpri);border-radius:18px;padding:22px;margin-bottom:16px}
+.hero p{margin:.2em 0 1em;opacity:.9}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+label{display:block;font-size:.9rem;color:var(--mute);margin:10px 0 4px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px}
+.chip{white-space:nowrap;border:1px solid var(--line);background:var(--card);border-radius:99px;padding:5px 14px}
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.pad{padding:12px 14px}
+.cover{height:110px;display:flex;align-items:center;justify-content:center;font-size:3rem;background:var(--soft);background-size:cover;background-position:center}
+.pimg{height:130px;display:flex;align-items:center;justify-content:center;font-size:3.4rem;background:var(--soft);background-size:cover;background-position:center}
+.brand{text-align:start;width:100%;padding:0;border:1px solid var(--line);background:var(--card);border-radius:14px;overflow:hidden}
+.mute{color:var(--mute);font-size:.9rem}
+.tag{display:inline-block;font-size:.78rem;background:var(--soft);color:var(--pri);border-radius:99px;padding:1px 10px;margin-inline-end:4px}
+.btn{border:0;background:var(--pri);color:var(--onpri);padding:9px 16px;border-radius:10px;font-weight:500;text-decoration:none;display:inline-block}
+.btn.alt{background:var(--soft);color:var(--pri)}.btn.bad{background:var(--acc);color:#fff}.btn.ok{background:var(--ok);color:#fff}
+.btn.sm{padding:5px 12px;font-size:.88rem}.btn.full{width:100%;margin-top:14px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.sp{justify-content:space-between}
+.price{font-weight:700}
+.tabs{display:flex;gap:6px;margin:10px 0;border-bottom:1px solid var(--line)}
+.tabs button{border:0;background:none;padding:8px 14px;color:var(--mute);border-bottom:3px solid transparent}
+.tabs button.on{color:var(--pri);border-color:var(--pri);font-weight:700}
+.st{font-size:.8rem;border-radius:99px;padding:1px 10px;background:var(--soft);color:var(--pri)}
+.st.new{background:#fff2c9;color:#7a5800}.st.rej{background:#fde0e4;color:#a02338}.st.done{background:#d8f3ea;color:#11624c}
+.drawer{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20;display:flex;justify-content:flex-start}
+.panel{background:var(--bg);width:min(420px,100%);height:100%;overflow:auto;padding:16px;padding-top:calc(16px + env(safe-area-inset-top,0px))}
+.opt{display:flex;gap:8px;align-items:center;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px;margin:6px 0;color:var(--ink);font-size:1rem}
+.opt input{width:auto}
+.seg{display:flex;background:var(--soft);border-radius:99px;padding:3px;width:max-content}
+.seg button{border:0;background:none;padding:6px 16px;border-radius:99px;color:var(--mute)}
+.seg button.on{background:var(--pri);color:var(--onpri)}
+.toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;z-index:30}
+.note{background:var(--soft);border-radius:12px;padding:10px 14px;font-size:.9rem;margin-bottom:12px}
+.empty{text-align:center;color:var(--mute);padding:30px}
+.welcome{text-align:center;max-width:640px;margin:6vh auto 0}.welcome h1{font-size:2rem}
+.auth{max-width:420px;margin:4vh auto 0}
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+.pick{display:flex;flex-direction:column;align-items:center;gap:6px;padding:26px 14px;border:2px solid var(--line);background:var(--card);border-radius:18px;color:var(--ink)}
+.pick:hover{border-color:var(--pri)}.pick b{font-size:1.15rem}.pick .big{font-size:2.8rem}
+@media (max-width:480px){.choice{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="bar" id="hd"></div></header>
+<main id="app"></main>
+<div id="layer"></div>
+<script>
+window.MSM_API = "https://msm-requests.sarahjaafar6201.workers.dev/";
+const PHONE="32016444",INTL="97332016444";
+const ld=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+const sv=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+const LG={
+ar:{app:"MSM",settings:"الإعدادات",language:"اللغة",theme:"الخلفية",light:"بيضاء",dark:"سوداء",logout:"تسجيل الخروج",close:"إغلاق",
+contact:"تواصل معنا",contactP:"للاستفسار أو الدعم تواصل معنا على الرقم:",call:"اتصال",wa:"واتساب",
+login:"تسجيل الدخول",register:"إنشاء حساب",name:"الاسم",email:"البريد الإلكتروني",password:"كلمة المرور",noAcc:"ليس لديك حساب؟ أنشئ حساباً",haveAcc:"لديك حساب؟ سجّل دخولك",
+eFill:"عبّئ جميع الحقول",eBad:"البريد أو كلمة المرور غير صحيحة",eEx:"هذا البريد مسجّل مسبقاً",ePw:"كلمة المرور 6 أحرف على الأقل",
+wel:"أهلاً بك في MSM 👋",welP:"منصة تجمع البراندات والمشاريع الصغيرة في مكان واحد. كيف تريد المتابعة؟",iamC:"أنا عميل",iamCs:"أتصفح البراندات وأطلب منتجاتي",iamO:"أنا صاحب براند",iamOs:"قدّم طلب انضمام وأدِر براندك",
+heroT:"كل البراندات والمشاريع الصغيرة في مكان واحد",heroP:"اطلب ملابس، تجميل، أكل، حلويات وهدايا من أصحاب المشاريع. الدفع عند الاستلام.",search:"ابحث عن براند أو مشروع",all:"الكل",
+back:"رجوع",myOrders:"طلباتي",noRes:"لا توجد نتائج.",noBr:"لا توجد براندات بعد. كن أول المنضمين!",cart:"السلة",emptyCart:"السلة فارغة. اختر براندًا وأضف منتجاتك.",noProd:"لم يضف هذا البراند منتجات بعد.",
+pickup:"استلام فقط",delivery:"توصيل فقط",both:"استلام وتوصيل",feeT:"رسوم التوصيل",add:"أضف للسلة",added:"أُضيف إلى السلة",
+diff:"سلتك تحتوي منتجات من براند آخر. هل تريد تفريغها والبدء بسلة جديدة؟",cartOf:"سلتك من",how:"طريقة الاستلام",pk:"📦 استلام من صاحب البراند",dl:"🚗 توصيل",
+phone:"رقم الهاتف",addr:"العنوان",notes:"ملاحظات (اختياري)",cod:"💵 الدفع عند الاستلام.",total:"المجموع",confirm:"تأكيد الطلب",needNP:"اكتب الاسم ورقم الهاتف",needAd:"اكتب عنوان التوصيل",sent:"تم إرسال طلبك إلى",
+noOrd:"لا توجد طلبات بعد.",pay:"الدفع عند الاستلام",saveErr:"تعذّر الحفظ. سجّل دخولك في claude.ai بحساب لديه صلاحية المشاركة.",loading:"جارٍ التحميل…",
+local:"تنبيه: لا يوجد اتصال بقاعدة البيانات المشتركة، لذلك تُحفظ البيانات على جهازك فقط ولن تصل للإدارة.",
+s_new:"جديد",s_accepted:"مقبول",s_ready:"جاهز",s_done:"مكتمل",s_rej:"مرفوض",accept:"قبول",reject:"رفض",markReady:"جاهز للتسليم",markDone:"تم التسليم",tkP:"🚗 توصيل",tkU:"📦 استلام",note:"ملاحظة",
+tOrd:"الطلبات",tProd:"المنتجات",tSet:"صفحة البراند",noOwnOrd:"لا توجد طلبات بعد.",
+addP:"إضافة منتج",pn:"الاسم",pp:"السعر",pe:"رمز",pd:"الوصف",pimg:"صورة (اختياري)",saveP:"حفظ المنتج",needP:"اكتب اسم المنتج وسعره",pAdded:"تمت إضافة المنتج",del:"حذف",delQ:"حذف هذا المنتج؟",
+bn:"اسم البراند",cat:"التصنيف",bd:"نبذة",svc:"الخدمة المتوفرة",fee:"رسوم التوصيل",be:"رمز البراند",bimg:"صورة الغلاف (اختياري)",saveB:"حفظ التغييرات",saved:"تم الحفظ",
+adm:"طلبات الانضمام",noApps:"لا توجد طلبات انضمام.",approve:"قبول",rejA:"رفض",
+fT:"انضم كصاحب براند",fP:"عبّئ بياناتك، وسنراجع طلبك ونبلغك بالقرار.",fn:"الاسم الكامل",fph:"رقم الهاتف",fbn:"اسم البراند أو المشروع",fd:"نبذة عن البراند ومنتجاتك",fcity:"المدينة / المنطقة",fsoc:"حساب إنستغرام أو رابط (اختياري)",fmsg:"رسالة طلب الانضمام",recheck:"تحقق من الحالة",sendErr:"تعذّر إرسال الطلب. حاول لاحقاً.",errNet:"تعذّر الاتصال بالخادم (قد يكون السبب إعداد ALLOWED_ORIGIN في Cloudflare أو الإنترنت).",errSrv:"الخادم ردّ بخطأ",errRate:"وصلتِ للحد: 3 طلبات في الساعة لنفس البريد. جرّبي بعد ساعة أو ببريد آخر.",noApi:"الإرسال غير مفعّل بعد: لم يُربط الموقع بخدمة البريد (يعمل بعد رفعه على GitHub وربطه بـ Cloudflare).",submit:"إرسال الطلب",needApp:"عبّئ الاسم والهاتف والبريد واسم البراند والنبذة والرسالة",appSent:"تم إرسال طلبك",
+pendT:"طلبك قيد المراجعة ⏳",pendP:"استلمنا طلبك وسنراجعه. وعند القبول يصلك إشعار على بريدك، ثم اضغط «تحقق من الحالة».",rejT:"نعتذر، لم يُقبل طلبك",rejP:"يمكنك تعديل بياناتك وإعادة إرسال الطلب.",resend:"تعديل وإعادة الإرسال",
+a_pending:"قيد المراجعة",a_ok:"مقبول",a_rej:"مرفوض",accOk:"تم قبول البراند",
+cur:"د.ب",cats:{c1:"ملابس وإكسسوارات",c2:"تجميل",c3:"أكل ومطاعم",c4:"حلويات ومخبوزات",c5:"هدايا",c6:"أخرى"},dec:"−",inc:"+"},
+en:{app:"MSM",settings:"Settings",language:"Language",theme:"Background",light:"White",dark:"Black",logout:"Log out",close:"Close",
+contact:"Contact us",contactP:"For questions or support, reach us on:",call:"Call",wa:"WhatsApp",
+login:"Log in",register:"Sign up",name:"Name",email:"Email",password:"Password",noAcc:"No account? Sign up",haveAcc:"Have an account? Log in",
+eFill:"Please fill in all fields",eBad:"Wrong email or password",eEx:"This email is already registered",ePw:"Password must be at least 6 characters",
+wel:"Welcome to MSM 👋",welP:"A platform that brings brands and small businesses together in one place. How would you like to continue?",iamC:"I’m a customer",iamCs:"Browse brands and order products",iamO:"I’m a brand owner",iamOs:"Apply to join and manage your brand",
+heroT:"All brands and small businesses in one place",heroP:"Order fashion, beauty, food, sweets and gifts from business owners. Pay on delivery or pickup.",search:"Search for a brand or business",all:"All",
+back:"Back",myOrders:"My orders",noRes:"No results.",noBr:"No brands yet. Be the first to join!",cart:"Cart",emptyCart:"Your cart is empty. Pick a brand and add products.",noProd:"This brand hasn’t added products yet.",
+pickup:"Pickup only",delivery:"Delivery only",both:"Pickup & delivery",feeT:"Delivery fee",add:"Add to cart",added:"Added to cart",
+diff:"Your cart has items from another brand. Clear it and start a new cart?",cartOf:"Your cart from",how:"How to receive",pk:"📦 Pick up from the brand owner",dl:"🚗 Delivery",
+phone:"Phone number",addr:"Address",notes:"Notes (optional)",cod:"💵 Pay on delivery.",total:"Total",confirm:"Confirm order",needNP:"Enter your name and phone",needAd:"Enter the delivery address",sent:"Your order was sent to",
+noOrd:"No orders yet.",pay:"Pay on delivery",saveErr:"Couldn’t save. Log in to claude.ai with an account that has contributor access.",loading:"Loading…",
+local:"Notice: not connected to the shared database, so data is saved on this device only and won’t reach the admin.",
+s_new:"New",s_accepted:"Accepted",s_ready:"Ready",s_done:"Completed",s_rej:"Rejected",accept:"Accept",reject:"Reject",markReady:"Ready for handover",markDone:"Delivered",tkP:"🚗 Delivery",tkU:"📦 Pickup",note:"Note",
+tOrd:"Orders",tProd:"Products",tSet:"Brand page",noOwnOrd:"No orders yet.",
+addP:"Add a product",pn:"Name",pp:"Price",pe:"Icon",pd:"Description",pimg:"Image (optional)",saveP:"Save product",needP:"Enter the product name and price",pAdded:"Product added",del:"Delete",delQ:"Delete this product?",
+bn:"Brand name",cat:"Category",bd:"About",svc:"Service offered",fee:"Delivery fee",be:"Brand icon",bimg:"Cover image (optional)",saveB:"Save changes",saved:"Saved",
+adm:"Join requests",noApps:"No join requests.",approve:"Approve",rejA:"Reject",
+fT:"Join as a brand owner",fP:"Fill in your details. We’ll review your request and let you know our decision.",fn:"Full name",fph:"Phone number",fbn:"Brand or business name",fd:"About your brand and products",fcity:"City / area",fsoc:"Instagram or link (optional)",fmsg:"Join request message",recheck:"Check status",sendErr:"Couldn’t send your request. Please try again later.",errNet:"Couldn’t reach the server (maybe the ALLOWED_ORIGIN setting in Cloudflare, or the internet).",errSrv:"Server returned an error",errRate:"Limit reached: 3 requests per hour per email. Try later or use another email.",noApi:"Sending isn’t enabled yet: the site isn’t connected to the email service (it works after hosting on GitHub and connecting Cloudflare).",submit:"Submit request",needApp:"Fill in your name, phone, email, brand name, description and message",appSent:"Your request was sent",
+pendT:"Your request is under review ⏳",pendP:"We received your request and will review it. If accepted you’ll get an email, then tap “Check status”.",rejT:"Sorry, your request wasn’t accepted",rejP:"You can edit your details and submit again.",resend:"Edit and resubmit",
+a_pending:"Under review",a_ok:"Approved",a_rej:"Rejected",accOk:"Brand approved",
+cur:"BHD",cats:{c1:"Fashion & accessories",c2:"Beauty",c3:"Food & restaurants",c4:"Sweets & bakery",c5:"Gifts",c6:"Other"},dec:"−",inc:"+"}};
+let lang=ld("msm_lang")==="en"?"en":"ar";
+const t=k=>LG[lang][k]??k;
+const CK=Object.keys(LG.ar.cats);
+const COL=["brands","products","orders"];
+let S={brands:[],products:[],orders:[]},U=[];
+try{U=JSON.parse(ld("msm_users"))||[]}catch(e){}
+let DB=null,UID=null,ADMIN=false,READY=false;
+let theme=ld("msm_theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+let st={user:U.find(u=>u.email==ld("msm_sess"))||null,am:"login",role:null,cat:"all",q:"",brand:null,cart:[],tab:"orders",ctab:"browse",err:"",edit:false};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const money=n=>(+n).toFixed(2)+" "+t("cur");
+const catT=k=>LG[lang].cats[k]||k;
+const bOf=id=>S.brands.find(b=>b.id==id);
+const me=()=>UID||("l_"+st.user.email.replace(/\W/g,"_"));
+const lapp=()=>{try{return JSON.parse(ld("msm_app_"+st.user.email))}catch(e){return null}};
+const fdate=n=>new Date(n).toLocaleString(lang=="ar"?"ar-BH":"en-GB");
+const media=(o,cls)=>`<div class="${cls}" ${o.img?`style="background-image:url(${o.img})"`:""}>${o.img?"":o.emoji}</div>`;
+function toast(m){const d=document.createElement("div");d.className="toast";d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),4500)}
+
+/* ---------- التخزين: قاعدة مشتركة أو محلي ---------- */
+const persist=()=>sv("msm_data",JSON.stringify(S));
+async function put(c,o){
+  const i=S[c].findIndex(x=>x.id==o.id);i<0?S[c].push(o):S[c][i]=o;
+  if(!DB){persist();return true}
+  try{await DB.collection(c).doc(o.id).set(o);return true}catch(e){toast(t("saveErr"));return false}
+}
+async function rm(c,id){
+  S[c]=S[c].filter(x=>x.id!=id);
+  if(!DB){persist();return}
+  try{await DB.collection(c).doc(id).delete()}catch(e){toast(t("saveErr"))}
+}
+function busy(){const a=document.activeElement;return a&&a.matches&&a.matches("input,textarea,select")&&$("#app").contains(a)}
+async function boot(){
+  render();
+  try{
+    if(typeof claude!="undefined"){
+      const d=await claude.use("db"),u=await claude.use("user");
+      if(d&&u){UID=await u.id();ADMIN=await u.isOwner();DB=UID?d:null}
+    }
+  }catch(e){DB=null}
+  if(DB){COL.forEach(c=>DB.collection(c).onSnapshot(sn=>{S[c]=sn.docs.map(d=>({...d.data(),id:d.id}));if(READY&&!busy())render()},()=>{}))}
+  else{try{const x=JSON.parse(ld("msm_data"));if(x)COL.forEach(c=>S[c]=x[c]||[])}catch(e){}}
+  READY=true;render();
+}
+
+function applyEnv(){const h=document.documentElement;h.lang=lang;h.dir=lang=="ar"?"rtl":"ltr";h.dataset.theme=theme;document.title="MSM"}
+function render(){
+  applyEnv();
+  const cartOn=st.user&&st.role=="c";
+  $("#hd").innerHTML=`<div class="logo" id="logo">🛍️ ${t("app")}</div>${cartOn?`<button class="ibtn" id="cartBtn">🛒 ${t("cart")} <b>${st.cart.reduce((a,i)=>a+i.q,0)}</b></button>`:""}<button class="ibtn" id="setBtn">⚙️ ${t("settings")}</button>`;
+  $("#logo").onclick=()=>{if(st.user){st.role=null;st.brand=null;st.edit=false;closeL();render()}};
+  $("#setBtn").onclick=settings;if(cartOn)$("#cartBtn").onclick=cartView;
+  $("#app").innerHTML=!READY?`<div class="empty">${t("loading")}</div>`:!st.user?authView():!st.role?welcome():st.role=="c"?(st.brand?brandView():home()):ownerGate();
+  if(READY&&!DB&&st.user)$("#app").insertAdjacentHTML("afterbegin",`<div class="note">${t("local")}</div>`);
+}
+
+/* ---------- الإعدادات ---------- */
+function settings(){
+  $("#layer").innerHTML=`<div class="drawer" onclick="if(event.target==this)closeL()"><div class="panel"><h2>⚙️ ${t("settings")}</h2>
+  ${st.user?`<div class="mute">${esc(st.user.name)} · ${esc(st.user.email)}</div>`:""}
+  <label>${t("language")}</label><div class="seg"><button class="${lang=="ar"?"on":""}" onclick="setLang('ar')">العربية</button><button class="${lang=="en"?"on":""}" onclick="setLang('en')">English</button></div>
+  <label>${t("theme")}</label><div class="seg"><button class="${theme=="light"?"on":""}" onclick="setTheme('light')">${t("light")}</button><button class="${theme=="dark"?"on":""}" onclick="setTheme('dark')">${t("dark")}</button></div>
+  <label>${t("contact")}</label><div class="card pad"><div class="mute">${t("contactP")}</div><div style="font-size:1.3rem;font-weight:700" dir="ltr">${PHONE}</div>
+  <div class="row" style="margin-top:8px"><a class="btn sm" href="tel:+${INTL}">📞 ${t("call")}</a><a class="btn ok sm" href="https://wa.me/${INTL}" target="_blank" rel="noopener">💬 ${t("wa")}</a></div></div>
+  <div class="row" style="margin-top:20px">${st.user?`<button class="btn bad" onclick="logout()">${t("logout")}</button>`:""}<button class="btn alt" onclick="closeL()">${t("close")}</button></div></div></div>`;
+}
+function setLang(l){lang=l;sv("msm_lang",l);render();settings()}
+function setTheme(m){theme=m;sv("msm_theme",m);render();settings()}
+function logout(){st.user=null;st.role=null;st.cart=[];st.brand=null;sv("msm_sess","");closeL();render()}
+function closeL(){$("#layer").innerHTML=""}
+
+/* ---------- الدخول ---------- */
+function authView(){
+  const r=st.am=="reg";
+  return `<div class="auth card pad"><h1>${t(r?"register":"login")}</h1>
+  ${r?`<label>${t("name")}</label><input id="an" autocomplete="name">`:""}
+  <label>${t("email")}</label><input id="ae" type="email" autocomplete="email" dir="ltr">
+  <label>${t("password")}</label><input id="ap" type="password" autocomplete="${r?"new-password":"current-password"}" dir="ltr">
+  <div style="color:var(--acc);margin-top:8px;min-height:1.4em">${esc(st.err)}</div>
+  <button class="btn full" id="go">${t(r?"register":"login")}</button>
+  <p style="text-align:center"><button class="chip" onclick="st.am='${r?"login":"reg"}';st.err='';render()">${t(r?"haveAcc":"noAcc")}</button></p></div>`;
+}
+document.addEventListener("keydown",e=>{if(e.key=="Enter"&&e.target.closest(".auth")){const g=$("#go");g&&g.click()}});
+document.addEventListener("click",e=>{if(e.target.id!="go")return;
+  const em=$("#ae").value.trim().toLowerCase(),pw=$("#ap").value,nm=st.am=="reg"?$("#an").value.trim():"x";
+  if(!em||!pw||!nm){st.err=t("eFill");return render()}
+  if(st.am=="reg"){
+    if(pw.length<6){st.err=t("ePw");return render()}
+    if(U.find(u=>u.email==em)){st.err=t("eEx");return render()}
+    U.push({email:em,pass:pw,name:nm});sv("msm_users",JSON.stringify(U));
+  }
+  const u=U.find(x=>x.email==em&&x.pass==pw);
+  if(!u){st.err=t("eBad");return render()}
+  st.user=u;st.err="";st.role=null;sv("msm_sess",u.email);render()
+});
+function welcome(){
+  return `<div class="welcome"><h1>${t("wel")}</h1><p class="mute">${t("welP")}</p><div class="choice">
+  <button class="pick" onclick="st.role='c';render()"><span class="big">🛒</span><b>${t("iamC")}</b><span class="mute">${t("iamCs")}</span></button>
+  <button class="pick" onclick="st.role='o';st.edit=false;st.stat=undefined;st.chk=false;render()"><span class="big">🏪</span><b>${t("iamO")}</b><span class="mute">${t("iamOs")}</span></button></div></div>`;
+}
+
+/* ---------- العميل ---------- */
+function home(){
+  if(st.ctab=="orders")return myOrders();
+  const l=S.brands.filter(b=>(st.cat=="all"||b.cat==st.cat)&&(b.name+b.desc).toLowerCase().includes(st.q.toLowerCase()));
+  return `<div class="hero"><h1>${t("heroT")}</h1><p>${t("heroP")}</p><input id="q" placeholder="${t("search")}" value="${esc(st.q)}"></div>
+  <div class="row sp"><div class="chips">${["all",...CK].map(c=>`<button class="chip ${c==st.cat?"on":""}" data-c="${c}">${c=="all"?t("all"):catT(c)}</button>`).join("")}</div>
+  <button class="btn alt sm" onclick="st.ctab='orders';render()">${t("myOrders")}</button></div>
+  <div class="grid">${l.map(b=>`<button class="brand" data-b="${b.id}">${media(b,"cover")}<div class="pad"><b>${esc(b.name)}</b><div class="mute">${esc(b.desc)}</div><div style="margin-top:6px"><span class="tag">${catT(b.cat)}</span><span class="tag">${t(b.mode)}</span></div></div></button>`).join("")||`<div class="empty">${S.brands.length?t("noRes"):t("noBr")}</div>`}</div>`;
+}
+document.addEventListener("click",e=>{
+  const c=e.target.closest("[data-c]"),b=e.target.closest("[data-b]"),a=e.target.closest("[data-add]");
+  if(c){st.cat=c.dataset.c;render()}
+  if(b){st.brand=b.dataset.b;render();scrollTo(0,0)}
+  if(a)addCart(a.dataset.add);
+});
+document.addEventListener("input",e=>{if(e.target.id=="q"){st.q=e.target.value;const p=e.target.selectionStart;render();const i=$("#q");i.focus();i.setSelectionRange(p,p)}});
+function brandView(){
+  const b=bOf(st.brand);if(!b){st.brand=null;return home()}
+  const ps=S.products.filter(p=>p.b==b.id);
+  return `<button class="btn alt sm" onclick="st.brand=null;render()">${t("back")}</button>
+  <div class="card" style="margin:12px 0">${media(b,"cover")}<div class="pad"><h1>${esc(b.name)}</h1><div class="mute">${esc(b.desc)}</div><div style="margin-top:6px"><span class="tag">${t(b.mode)}</span>${b.mode!="pickup"?`<span class="tag">${t("feeT")} ${money(b.fee)}</span>`:""}</div></div></div>
+  <div class="grid">${ps.map(p=>`<div class="card">${media(p,"pimg")}<div class="pad"><b>${esc(p.name)}</b><div class="mute">${esc(p.desc)}</div><div class="row sp" style="margin-top:8px"><span class="price">${money(p.price)}</span><button class="btn sm" data-add="${p.id}">${t("add")}</button></div></div></div>`).join("")||`<div class="empty">${t("noProd")}</div>`}</div>`;
+}
+function addCart(id){
+  const p=S.products.find(x=>x.id==id);
+  if(st.cart.length&&st.cart[0].b!=p.b){if(!confirm(t("diff")))return;st.cart=[]}
+  const i=st.cart.find(x=>x.id==id);i?i.q++:st.cart.push({id,b:p.b,q:1});
+  render();toast(t("added"))
+}
+const cprod=i=>S.products.find(p=>p.id==i.id);
+function cartView(){
+  const L=$("#layer");st.cart=st.cart.filter(cprod);
+  if(!st.cart.length){L.innerHTML=`<div class="drawer" onclick="if(event.target==this)closeL()"><div class="panel"><h2>${t("cart")}</h2><div class="empty">${t("emptyCart")}</div><button class="btn alt" onclick="closeL()">${t("close")}</button></div></div>`;render();return}
+  const b=bOf(st.cart[0].b),sub=st.cart.reduce((a,i)=>a+cprod(i).price*i.q,0);
+  const dm=b.mode!="pickup",pm=b.mode!="delivery";
+  L.innerHTML=`<div class="drawer" onclick="if(event.target==this)closeL()"><div class="panel"><h2>${t("cartOf")} ${esc(b.name)}</h2>
+  ${st.cart.map((i,k)=>{const p=cprod(i);return `<div class="row sp card pad" style="margin:6px 0"><div><b>${esc(p.name)}</b><div class="mute">${money(p.price)}</div></div><div class="row"><button class="btn alt sm" onclick="qty(${k},-1)">${t("dec")}</button><b>${i.q}</b><button class="btn alt sm" onclick="qty(${k},1)">${t("inc")}</button></div></div>`}).join("")}
+  <label>${t("how")}</label>
+  ${pm?`<label class="opt"><input type="radio" name="m" value="pickup" checked>${t("pk")}</label>`:""}
+  ${dm?`<label class="opt"><input type="radio" name="m" value="delivery" ${!pm?"checked":""}>${t("dl")} (+${money(b.fee)})</label>`:""}
+  <label>${t("name")}</label><input id="cn" value="${esc(st.user.name)}"><label>${t("phone")}</label><input id="cp" inputmode="tel" dir="ltr">
+  <div id="ad" style="display:${pm?"none":"block"}"><label>${t("addr")}</label><textarea id="ca" rows="2"></textarea></div>
+  <label>${t("notes")}</label><input id="cx">
+  <div class="note" style="margin-top:12px">${t("cod")}</div>
+  <div class="row sp"><b>${t("total")}</b><b id="tot">${money(sub)}</b></div>
+  <div class="row" style="margin-top:12px"><button class="btn" onclick="place()">${t("confirm")}</button><button class="btn alt" onclick="closeL()">${t("close")}</button></div></div></div>`;
+  L.querySelectorAll("[name=m]").forEach(r=>r.onchange=()=>{const d=L.querySelector("[name=m]:checked").value=="delivery";$("#ad").style.display=d?"block":"none";$("#tot").textContent=money(sub+(d?+b.fee:0))});
+  const f=L.querySelector("[name=m]:checked");if(f)f.onchange();
+}
+function qty(k,d){st.cart[k].q+=d;if(st.cart[k].q<1)st.cart.splice(k,1);render();cartView()}
+async function place(){
+  const b=bOf(st.cart[0].b),m=$("[name=m]:checked").value,n=$("#cn").value.trim(),p=$("#cp").value.trim(),a=$("#ca").value.trim();
+  if(!n||!p)return toast(t("needNP"));
+  if(m=="delivery"&&!a)return toast(t("needAd"));
+  const items=st.cart.map(i=>{const x=cprod(i);return {name:x.name,price:x.price,q:i.q}});
+  const sub=items.reduce((x,i)=>x+i.price*i.q,0),fee=m=="delivery"?+b.fee:0,tm=Date.now();
+  const ok=await put("orders",{id:"o"+tm,no:1000+Math.floor(Math.random()*9000),b:b.id,uid:me(),items,mode:m,name:n,phone:p,addr:a,note:$("#cx").value,total:sub+fee,status:"new",t:tm});
+  if(!ok)return;
+  st.cart=[];st.brand=null;st.ctab="orders";closeL();render();toast(t("sent")+" "+b.name)
+}
+function myOrders(){
+  const os=S.orders.filter(o=>o.uid==me()).sort((a,b)=>b.t-a.t);
+  return `<button class="btn alt sm" onclick="st.ctab='browse';render()">${t("back")}</button><h2 style="margin-top:14px">${t("myOrders")}</h2>${os.map(o=>orderCard(o,false)).join("")||`<div class="empty">${t("noOrd")}</div>`}`;
+}
+function orderCard(o,own){
+  const b=bOf(o.b)||{name:"—"},cls=o.status=="new"?"new":o.status=="rej"?"rej":o.status=="done"?"done":"";
+  const next={accepted:["ready","markReady"],ready:["done","markDone"]}[o.status];
+  return `<div class="card pad" style="margin:8px 0"><div class="row sp"><b>#${o.no} · ${esc(b.name)}</b><span class="st ${cls}">${t("s_"+o.status)}</span></div>
+  <div class="mute">${fdate(o.t)} · ${o.mode=="delivery"?t("tkP"):t("tkU")}</div>
+  <div style="margin:6px 0">${o.items.map(i=>`${esc(i.name)} × ${i.q}`).join(lang=="ar"?"، ":", ")}</div>
+  ${own?`<div class="mute">👤 ${esc(o.name)} · 📞 <span dir="ltr">${esc(o.phone)}</span>${o.addr?` · 📍 ${esc(o.addr)}`:""}${o.note?`<br>${t("note")}: ${esc(o.note)}`:""}</div>`:""}
+  <div class="row sp" style="margin-top:6px"><b>${money(o.total)} · ${t("pay")}</b>${own?`<div class="row">
+   ${o.status=="new"?`<button class="btn ok sm" onclick="setS('${o.id}','accepted')">${t("accept")}</button><button class="btn bad sm" onclick="setS('${o.id}','rej')">${t("reject")}</button>`:""}
+   ${next?`<button class="btn sm" onclick="setS('${o.id}','${next[0]}')">${t(next[1])}</button>`:""}</div>`:""}</div></div>`;
+}
+function setS(id,s){const o=S.orders.find(x=>x.id==id);o.status=s;put("orders",o);render()}
+
+/* ---------- صاحب البراند: طلب انضمام ثم لوحة ---------- */
+function ownerGate(){
+  const b=S.brands.find(x=>x.owner==me());
+  if(b)return bBoard(b);
+  if(st.stat===undefined){if(!st.chk){st.chk=true;checkStatus()}return `<div class="empty">${t("loading")}</div>`}
+  if(st.stat===null||st.edit)return appForm(lapp());
+  if(st.stat=="rejected")return `<div class="welcome card pad"><h1>${t("rejT")}</h1><p class="mute">${t("rejP")}</p><button class="btn" onclick="st.edit=true;render()">${t("resend")}</button></div>`;
+  return `<div class="welcome card pad"><h1>${t("pendT")}</h1><p class="mute">${t("pendP")}</p><button class="btn alt" onclick="st.stat=undefined;render()">${t("recheck")}</button></div>`;
+}
+async function checkStatus(){
+  let d=null;
+  try{const r=await fetch(window.MSM_API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({op:"status",email:st.user.email})});d=await r.json()}catch(e){}
+  st.stat=d&&d.ok&&d.status?d.status:null;st.chk=false;
+  if(st.stat=="accepted"){const x=d.brand;await put("brands",{id:"b_"+me(),owner:me(),name:x.shop,cat:x.catKey||"c6",emoji:"🛍️",desc:x.desc,mode:x.modeKey||"pickup",fee:+x.fee||0,img:""})}
+  render()
+}
+function appForm(a){
+  a=a||{};
+  return `<div class="auth card pad"><h1>${t("fT")}</h1><p class="mute">${t("fP")}</p>
+  <label>${t("fn")}</label><input id="f_n" value="${esc(a.name||st.user.name)}">
+  <label>${t("fph")}</label><input id="f_p" inputmode="tel" dir="ltr" value="${esc(a.phone||"")}">
+  <label>${t("email")}</label><input id="f_e" type="email" dir="ltr" readonly value="${esc(st.user.email)}">
+  <label>${t("fbn")}</label><input id="f_b" value="${esc(a.bname||"")}">
+  <label>${t("cat")}</label><select id="f_c">${CK.map(c=>`<option value="${c}" ${c==a.cat?"selected":""}>${catT(c)}</option>`).join("")}</select>
+  <label>${t("fd")}</label><textarea id="f_d" rows="3">${esc(a.desc||"")}</textarea>
+  <label>${t("svc")}</label><select id="f_m">${["pickup","delivery","both"].map(k=>`<option value="${k}" ${k==a.mode?"selected":""}>${t(k)}</option>`).join("")}</select>
+  <label>${t("fee")} (${t("cur")})</label><input id="f_f" type="number" step="0.1" min="0" value="${a.fee||0}">
+  <label>${t("fcity")}</label><input id="f_t" value="${esc(a.city||"")}">
+  <label>${t("fsoc")}</label><input id="f_s" dir="ltr" value="${esc(a.social||"")}">
+  <label>${t("fmsg")}</label><textarea id="f_g" rows="3">${esc(a.msg||"")}</textarea>
+  <input id="f_h" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+  <button class="btn full" onclick="sendApp()">${t("submit")}</button></div>`;
+}
+async function sendApp(){
+  const v=i=>$("#"+i).value.trim(),o={name:v("f_n"),phone:v("f_p"),email:v("f_e"),bname:v("f_b"),cat:v("f_c"),desc:v("f_d"),mode:v("f_m"),fee:parseFloat(v("f_f"))||0,city:v("f_t"),social:v("f_s"),msg:v("f_g")};
+  if(!o.name||!o.phone||!o.bname||!o.desc||!o.msg||!/^\S+@\S+\.\S+$/.test(o.email))return toast(t("needApp"));
+  if(!window.MSM_API||/YOUR-/.test(window.MSM_API))return toast(t("noApi"));
+  let d,r;
+  try{
+    r=await fetch(window.MSM_API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({op:"submit",...o,category:LG.ar.cats[o.cat],mode:LG.ar[o.mode],modeKey:o.mode,website:$("#f_h").value})});
+    d=await r.json();
+  }catch(e){return toast(r?t("errSrv")+" ("+r.status+")":t("errNet"))}
+  if(!d.ok)return toast(d.error=="rate"?t("errRate"):t("sendErr")+" ("+(d.error||"?")+")");
+  sv("msm_app_"+st.user.email,JSON.stringify(o));st.edit=false;st.stat="pending";render();toast(t("appSent"))
+}
+
+/* ---------- لوحة صاحب البراند المقبول ---------- */
+function bBoard(b){
+  if(!b)return `<div class="welcome card pad"><h1>${t("pendT")}</h1></div>`;
+  const tabs=[["orders","tOrd"],["products","tProd"],["settings","tSet"]];
+  let body="";
+  if(st.tab=="orders"){const os=S.orders.filter(o=>o.b==b.id).sort((a,c)=>c.t-a.t);body=os.map(o=>orderCard(o,true)).join("")||`<div class="empty">${t("noOwnOrd")}</div>`}
+  if(st.tab=="products"){const ps=S.products.filter(p=>p.b==b.id);body=`<div class="card pad"><h2>${t("addP")}</h2>
+   <div class="row"><div style="flex:1;min-width:150px"><label>${t("pn")}</label><input id="pn"></div><div style="width:110px"><label>${t("pp")} (${t("cur")})</label><input id="pp" type="number" step="0.1" min="0"></div><div style="width:80px"><label>${t("pe")}</label><input id="pe" value="🎁"></div></div>
+   <label>${t("pd")}</label><input id="pd"><label>${t("pimg")}</label><input type="file" id="pf" accept="image/*">
+   <button class="btn" style="margin-top:12px" onclick="addProd('${b.id}')">${t("saveP")}</button></div>
+   <div class="grid" style="margin-top:12px">${ps.map(p=>`<div class="card">${media(p,"pimg")}<div class="pad"><b>${esc(p.name)}</b><div class="row sp"><span class="price">${money(p.price)}</span><button class="btn bad sm" onclick="delProd('${p.id}')">${t("del")}</button></div></div></div>`).join("")}</div>`}
+  if(st.tab=="settings")body=`<div class="card pad"><label>${t("bn")}</label><input id="sn" value="${esc(b.name)}">
+   <label>${t("cat")}</label><select id="sc">${CK.map(c=>`<option value="${c}" ${c==b.cat?"selected":""}>${catT(c)}</option>`).join("")}</select>
+   <label>${t("bd")}</label><textarea id="sd" rows="2">${esc(b.desc)}</textarea>
+   <label>${t("svc")}</label><select id="sm">${["pickup","delivery","both"].map(k=>`<option value="${k}" ${k==b.mode?"selected":""}>${t(k)}</option>`).join("")}</select>
+   <label>${t("fee")} (${t("cur")})</label><input id="sf" type="number" step="0.1" min="0" value="${b.fee}">
+   <label>${t("be")}</label><input id="se" value="${esc(b.emoji)}"><label>${t("bimg")}</label><input type="file" id="sfile" accept="image/*">
+   <button class="btn" style="margin-top:12px" onclick="saveBrand('${b.id}')">${t("saveB")}</button></div>`;
+  return `<h2>${esc(b.name)}</h2><div class="tabs">${tabs.map(([k,v])=>`<button class="${st.tab==k?"on":""}" onclick="st.tab='${k}';render()">${t(v)}</button>`).join("")}</div>${body}`;
+}
+function readImg(f){return new Promise(r=>{if(!f)return r("");const im=new Image();im.onload=()=>{const k=Math.min(1,500/im.width),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);r(c.toDataURL("image/jpeg",.7))};im.onerror=()=>r("");im.src=URL.createObjectURL(f)})}
+async function addProd(bid){
+  const n=$("#pn").value.trim(),p=parseFloat($("#pp").value);
+  if(!n||isNaN(p))return toast(t("needP"));
+  const img=await readImg($("#pf").files[0]);
+  if(await put("products",{id:"p"+Date.now(),b:bid,name:n,price:p,emoji:$("#pe").value||"🎁",desc:$("#pd").value,img})){render();toast(t("pAdded"))}
+}
+async function delProd(id){if(!confirm(t("delQ")))return;await rm("products",id);render()}
+async function saveBrand(id){
+  const b=bOf(id),img=await readImg($("#sfile").files[0]);
+  const nb=Object.assign({},b,{name:$("#sn").value||b.name,cat:$("#sc").value,desc:$("#sd").value,mode:$("#sm").value,fee:parseFloat($("#sf").value)||0,emoji:$("#se").value||"🛍️"});
+  if(img)nb.img=img;
+  if(await put("brands",nb)){render();toast(t("saved"))}
+}
+boot();
+</script>
+</body>
+</html>
